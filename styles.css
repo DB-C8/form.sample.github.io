@@ -1,0 +1,1118 @@
+/* Gradient Background for the Body */
+body {
+    background: linear-gradient(135deg, #0b002e, #1a004d, #3d0075);
+    background-attachment: fixed;
+    color: #ffffff;
+    font-family: 'Satoshi', Arial, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Prevent scrolling */
+    cursor: none !important; /* Hide default cursor */
+}
+
+/* Particles container */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Form Container */
+.container-fluid {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+
+/* Card styling */
+.card.form-card {
+    background: transparent;
+    border: none;
+    max-width: 800px; /* Increased max-width */
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    width: 100% !important;
+    max-width: 2000px !important;
+}
+
+.card-body {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 60px;
+    width: 100% !important;
+}
+
+/* Form step styling */
+.form-step {
+    display: none;
+    text-align: left;
+    padding: 60px 0;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    width: 100% !important;
+    max-width: 2000px !important;
+}
+
+.form-step.active {
+    display: block;
+}
+
+/* Question number and text */
+.question-header {
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    line-height: 1.3;
+    text-align: left;
+    justify-content: flex-start;
+    max-width: 600px;
+    margin: 0 0 40px;
+    width: 600px;
+}
+
+.question-number {
+    color: rgba(255, 255, 255, 0.7); /* Slightly dimmed for hierarchy */
+    font-size: 2.4rem;
+    font-weight: 400;
+}
+
+
+/* Input styling */
+.form-control {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0;
+    padding: 20px 0 !important; /* Remove horizontal padding */
+    padding-left: 0 !important; /* Force left padding to 0 */
+    font-size: 3rem;
+    color: #FFFFFF;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    width: 1800px !important;
+    margin: 30px auto 0;
+    display: block;
+    text-align: left !important;
+}
+
+
+.form-control:focus {
+    color: #FFFFFF;
+    background: transparent;
+    border-color: #EBA9F3 !important; /* Changed to match the button hover color */
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-align: left !important;
+    padding-left: 0 !important; /* Remove placeholder padding */
+}
+
+/* OK button styling */
+.next-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    padding: 12px 30px;
+    color: #FFFFFF;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+.next-btn:hover, .next-btn:active, .next-btn:focus {
+    background: #EBA9F3; /* Solid purple background */
+    border-color: #EBA9F3;
+    color: black;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px #EBA9F3;
+}
+
+/* Enter key hint */
+.enter-hint {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    margin-left: 15px;
+    font-weight: 400;
+}
+
+/* Required indicator */
+.required {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.8rem;
+    margin-left: 8px;
+}
+
+/* Override any Bootstrap text colors */
+.text-muted,
+.text-dark,
+.text-body {
+    color: #FFFFFF !important;
+}
+
+/* Make sure input text stays white when typing */
+.form-control:active,
+.form-control:focus-visible {
+    color: #FFFFFF;
+}
+
+/* Override autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: #FFFFFF;
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Review section styling */
+.list-group-item {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 15px 0;
+    font-size: 1rem;
+}
+
+.list-group-item strong {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.list-group {
+    margin: 20px 0;
+}
+
+/* Progress bar styling */
+.progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px; /* Thinner height */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0; /* Remove border radius */
+    z-index: 1000; /* Ensure it's above other elements */
+    margin: 0; /* Remove any margin */
+}
+
+.progress-bar {
+    background: #CCFB54; /* Changed from rgba(255, 255, 255, 0.8) to lime green */
+    transition: width 0.3s ease; /* Smooth transition */
+}
+
+/* Example Container Styling */
+.container {
+    text-align: center;
+    padding: 50px;
+    max-width: 800px;
+}
+
+/* Text Styling */
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+h1 span {
+    color: #b873ff; /* Light purple color for emphasis */
+}
+
+p {
+    font-size: 1.2rem;
+    color: #d3d3d3;
+    margin-bottom: 30px;
+}
+
+/* Button Styling */
+.btn-primary, .next-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover, .next-btn:hover {
+    background: #EBA9F3; /* Solid purple background */
+    border-color: #EBA9F3;
+    color: black;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px #EBA9F3;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.btn-success {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Remove default button states */
+.btn:focus, .btn:active, .btn:active:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn-primary:focus, .btn-primary:active,
+.btn-secondary:focus, .btn-secondary:active,
+.btn-success:focus, .btn-success:active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+/* Optional: Floating Button (like the Get a Quote button) */
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #b5ff47;
+    color: #0b002e;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.floating-button:hover {
+    background-color: #d0ff73;
+}
+
+/* Base text color for all elements */
+* {
+    color: #FFFFFF;
+}
+
+/* Common button styles */
+.btn {
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    min-width: 100px; /* Ensure minimum width */
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+/* Primary button (Next/OK) */
+.btn-primary, .next-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #FFFFFF;
+}
+
+.btn-primary:hover, .next-btn:hover {
+    background: #EBA9F3; /* Solid purple background */
+    border-color: #EBA9F3;
+    color: black;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px #EBA9F3;
+}
+
+/* Secondary button (Back) */
+.btn-secondary, .prev-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+}
+
+.btn-secondary:hover, .prev-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #FFFFFF;
+}
+
+/* Button container */
+.button-group {
+    display: flex;
+    gap: 15px; /* Consistent spacing between buttons */
+    margin-top: 30px;
+}
+
+/* Navigation Arrows */
+.navigation-arrows {
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.nav-arrow {
+    position: absolute;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    pointer-events: auto; /* Enable clicking */
+}
+
+.nav-arrow:hover {
+    background: #EBA9F3;
+    transform: translateY(-50%) scale(1.1);
+    color: black !important; /* Force black color on hover */
+    box-shadow: 0 6px 20px rgba(235, 169, 243, 0.4);
+}
+
+.nav-prev {
+    left: 40px;
+}
+
+.nav-next {
+    right: 40px;
+}
+
+.nav-arrow.d-none {
+    display: none !important; /* Force hide when not needed */
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Arrow icon styling */
+.nav-arrow i {
+    transition: transform 0.3s ease;
+}
+
+.nav-prev:hover i {
+    transform: translateX(-3px);
+}
+
+.nav-next:hover i {
+    transform: translateX(3px);
+}
+
+/* Animation for showing/hiding arrows */
+.nav-arrow {
+    animation: fadeSlide 0.3s ease;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+/* Single line text container */
+.tagline {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.form-control-lg {
+    width: 100%;
+    min-width: 600px;  /* Increased from 400px */
+    max-width: 800px;  /* Increased from 600px */
+}
+
+.form-card {
+    width: 100% !important;
+    max-width: 2000px !important;
+}
+
+.card-body {
+    padding: 60px; /* Increased padding */
+    width: 100% !important;
+}
+
+/* Remove any conflicting styles */
+.next-btn:hover, .next-btn:active, .next-btn:focus {
+    background: #EBA9F3 !important;
+    color: black !important;
+    border-color: #EBA9F3 !important;
+    box-shadow: 0 4px 20px #EBA9F3 !important;
+}
+
+/* Make sure the arrow also turns black */
+.next-btn:hover i,
+.next-btn:hover svg,
+.btn-primary:hover i,
+.btn-primary:hover svg {
+    color: black !important;
+}
+
+/* Dropdown styling */
+select.form-control {
+    font-size: 3rem !important;
+    padding: 20px 40px !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    width: 100% !important;
+}
+
+/* Style for dropdown options */
+select.form-control option {
+    background-color: #0b002e !important;
+    color: #FFFFFF !important;
+    padding: 20px 40px !important;
+    font-size: 2.4rem !important;
+}
+
+/* Force the highlight color change */
+select.form-control option:hover,
+select.form-control option:focus,
+select.form-control option:active,
+select.form-control option:checked,
+select.form-control option:selected {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background: #EBA9F3 !important;
+    background-color: #EBA9F3 !important;
+    color: #0A001F !important;
+    -webkit-text-fill-color: #0A001F !important;
+    -webkit-box-shadow: 0 0 0 30px #EBA9F3 inset !important;
+    box-shadow: 0 0 0 30px #EBA9F3 inset !important;
+}
+
+/* Additional browser-specific overrides */
+@-moz-document url-prefix() {
+    select.form-control option:hover,
+    select.form-control option:focus,
+    select.form-control option:active,
+    select.form-control option:checked {
+        background-color: #EBA9F3 !important;
+        color: #0A001F !important;
+        box-shadow: 0 0 0 30px #EBA9F3 inset !important;
+    }
+}
+
+/* Webkit browsers */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select.form-control option:hover,
+    select.form-control option:focus,
+    select.form-control option:active,
+    select.form-control option:checked {
+        background-color: #EBA9F3 !important;
+        color: #0A001F !important;
+    }
+}
+
+/* Success message styling */
+#successMessage {
+    opacity: 0;
+    transform: translateY(20px);
+    width: 100%;
+    max-width: 900px; /* Reduced from 1200px */
+    margin: 0 auto;
+    padding: 30px;
+}
+
+#successMessage h2 {
+    font-size: 3.5rem !important; /* Reduced from 5rem */
+    font-weight: 600;
+    margin-bottom: 30px;
+    line-height: 1.2;
+}
+
+.success-text {
+    font-size: 1.6rem !important; /* Reduced from 2.2rem */
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.5s ease forwards;
+    animation-delay: 0.3s;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Adjust spacing between messages */
+.success-text + .success-text {
+    margin-top: 15px;
+}
+
+/* Center the content vertically better */
+.card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+
+/* Welcome text styling */
+#welcome-text { /* Targeting the ID added in HTML */
+    font-size: 3.8rem !important; /* Increased from 3rem */
+    color: #FFFFFF !important;
+    text-align: center !important;
+}
+
+/* Question text styling */
+.form-step h4.mb-4 {
+    font-size: 2.9rem !important; /* Increased from 2.5rem */
+    font-weight: 500 !important; /* Changed from 600 to 500 for medium weight */
+    color: #FFFFFF;
+    margin-bottom: 1.5rem !important;
+}
+
+/* For review step heading (if you want it consistent) */
+.form-step h4 {
+    font-size: 3.2rem !important;
+    font-weight: 500 !important;
+    color: #FFFFFF;
+}
+
+/* Make sure dropdown and textarea follow the same sizing */
+select.form-control,
+textarea.form-control {
+    width: 1800px !important;
+    font-size: 3rem;
+    padding: 20px 40px; /* Match the input padding */
+    text-align: left !important;
+}
+
+/* Make sure all form controls follow the same width and alignment */
+input.form-control,
+select.form-control,
+textarea.form-control {
+    width: 1800px !important;
+    text-align: left !important;
+    padding-left: 40px !important;
+}
+
+/* Placeholder text alignment */
+.form-control::placeholder {
+    text-align: left !important;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2.8rem;
+}
+
+/* Form step container */
+.form-step {
+    width: 100% !important;
+    max-width: 2000px !important;
+    margin: 0 auto;
+}
+
+/* Placeholder text alignment */
+.form-control::placeholder {
+    text-align: left !important;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2.8rem;
+    padding-left: 0 !important; /* Remove placeholder padding */
+}
+
+/* Make sure all form controls follow the same alignment */
+input.form-control,
+select.form-control,
+textarea.form-control {
+    width: 1800px !important;
+    text-align: left !important;
+    padding-left: 0 !important; /* Remove left padding */
+}
+
+/* Specific styling for select dropdowns */
+select.form-control {
+    padding-left: 0 !important;
+    text-indent: 0 !important;
+}
+
+/* Error message styling */
+.invalid-feedback {
+    font-size: 1.8rem !important; /* Increased from default */
+    color: #ff6b6b !important; /* Bright red color for visibility */
+    margin-top: 15px !important; /* Added more space above error message */
+    margin-left: 0 !important; /* Align with input field */
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+/* Make sure error messages are visible when form validation fails */
+.form-control.is-invalid ~ .invalid-feedback {
+    display: block;
+    font-size: 1.8rem !important;
+}
+
+/* Input focus styling */
+.form-control:focus {
+    color: #FFFFFF;
+    background: transparent;
+    border-color: #EBA9F3 !important; /* Changed to match the button hover color */
+    box-shadow: none;
+}
+
+/* Make sure the color stays consistent for all form controls */
+input.form-control:focus,
+select.form-control:focus,
+textarea.form-control:focus {
+    border-color: #EBA9F3 !important;
+}
+
+/* Make sure the arrow icon also turns black */
+.nav-arrow:hover i,
+.nav-arrow:hover svg {
+    color: black !important;
+}
+
+/* Select2 custom styling */
+.select2-container--classic .select2-results__option {
+    background-color: #0b002e !important;
+    color: #FFFFFF !important;
+    padding: 20px 40px !important;
+    font-size: 2.4rem !important;
+}
+
+.select2-container--classic .select2-results__option--highlighted[aria-selected] {
+    background-color: #EBA9F3 !important;
+    color: #0A001F !important;
+}
+
+.select2-container--classic .select2-selection--single {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 0 !important;
+    font-size: 3rem !important;
+    color: #FFFFFF !important;
+}
+
+/* Select2 Container */
+.select2-container {
+    width: 600px !important;
+}
+
+/* Main select field styling */
+.select2-container .select2-selection {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 0 !important;
+    height: auto !important;
+    padding: 20px 0 !important;
+}
+
+/* Selected option and placeholder */
+.select2-container .select2-selection__rendered {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 2.2rem !important; /* Adjusted to 2.2rem */
+    padding-left: 0 !important;
+    text-align: left !important;
+}
+
+/* Dropdown styling */
+.select2-dropdown {
+    background-color: #0b002e !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin-top: 10px !important;
+    width: 600px !important;
+    max-height: 80vh !important; /* Ensures dropdown is fully visible */
+    overflow-y: auto !important;
+}
+
+/* Options styling - updated */
+.select2-results__option {
+    padding: 15px 40px !important;
+    font-size: 2.2rem !important;
+    color: #FFFFFF !important;
+    background-color: #0b002e !important; /* Force consistent background */
+}
+
+/* Selected value styling */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-size: 2.2rem !important; /* Adjusted to 2.2rem */
+    color: #FFFFFF !important;
+}
+
+/* Placeholder color */
+.select2-container .select2-selection__placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 2.2rem !important; /* Adjusted to 2.2rem */
+}
+
+/* Remove default Select2 arrow */
+.select2-container .select2-selection__arrow {
+    display: none !important;
+}
+
+/* Additional Select2 initialization in your JavaScript */
+
+/* Modern Scrollbar Styling */
+.select2-results__options::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+.select2-results__options::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 10px !important;
+}
+
+.select2-results__options::-webkit-scrollbar-thumb {
+    background: #EBA9F3 !important;  /* Same as hover color */
+    border-radius: 10px !important;
+    border: 2px solid #0b002e !important;  /* Creates padding effect */
+}
+
+.select2-results__options::-webkit-scrollbar-thumb:hover {
+    background: #f4b8ff !important;  /* Slightly lighter on hover */
+}
+
+/* For Firefox */
+.select2-results__options {
+    scrollbar-width: thin !important;
+    scrollbar-color: #EBA9F3 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Container styling update */
+.select2-results {
+    padding: 8px !important;
+}
+
+.select2-results__options {
+    padding: 4px !important;
+    margin: 0 4px !important;
+}
+
+/* Form control styling for all states */
+.form-control,
+.form-control:active,
+.form-control:focus,
+.form-control:visited,
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-webkit-autofill:active {
+    background: transparent !important;
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    transition: background-color 5000s ease-in-out 0s;
+    color: #FFFFFF !important;
+}
+
+/* Select2 specific fixes for back navigation */
+.select2-container .select2-selection,
+.select2-container .select2-selection:active,
+.select2-container .select2-selection:focus,
+.select2-container .select2-selection:visited {
+    background: transparent !important;
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    color: #FFFFFF !important;
+}
+
+/* Ensure text stays white */
+.select2-container .select2-selection__rendered,
+.form-control::placeholder,
+.form-control::-webkit-input-placeholder,
+.form-control::-moz-placeholder,
+.form-control:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Override any browser autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+select:-webkit-autofill:active {
+    -webkit-text-fill-color: #FFFFFF !important;
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Force transparent background and white text */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+select:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:active {
+    transition-delay: 9999s;
+    transition-property: background-color, color;
+    -webkit-text-fill-color: #FFFFFF !important;
+    caret-color: #FFFFFF !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+    background-color: transparent !important;
+}
+
+/* Additional force override */
+input,
+select,
+textarea {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+
+/* Force Select2 to maintain transparency */
+.select2-container .select2-selection {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+}
+
+.select2-container .select2-selection__rendered {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+}
+
+/* Ensure form controls maintain transparency */
+.form-control {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+}
+
+/* Force override for all states */
+.form-control:focus,
+.form-control:active,
+.form-control:visited,
+.form-control.active {
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+}
+
+/* Select2 Container */
+.select2-container {
+    width: 600px !important;
+}
+
+/* Main select field styling */
+.select2-container .select2-selection {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 0 !important;
+    height: auto !important;
+    padding: 20px 0 !important;
+}
+
+/* Selected option and placeholder */
+.select2-container .select2-selection__rendered {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 2.2rem !important;
+    padding-left: 0 !important;
+    text-align: left !important;
+}
+
+/* Dropdown styling */
+.select2-dropdown {
+    background-color: #0b002e !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin-top: 10px !important;
+    width: 600px !important;
+    max-height: 80vh !important; /* Ensures dropdown is fully visible */
+    overflow-y: auto !important;
+}
+
+/* Options styling - updated */
+.select2-results__option {
+    padding: 15px 40px !important;
+    font-size: 2.2rem !important;
+    color: #FFFFFF !important;
+    background-color: #0b002e !important; /* Force consistent background */
+}
+
+/* Hover/Selected state - with stronger selectors */
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+.select2-results__option--highlighted[aria-selected],
+.select2-results__option--highlighted,
+.select2-results__option:hover {
+    background-color: #EBA9F3 !important;
+    color: #0A001F !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Selected option styling */
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: rgba(235, 169, 243, 0.3) !important;
+    color: #FFFFFF !important;
+}
+
+/* Hover effect on selected option */
+.select2-container--default .select2-results__option[aria-selected=true]:hover {
+    background-color: #EBA9F3 !important;
+    color: #0A001F !important;
+}
+
+/* Ensure dropdown is positioned correctly */
+.select2-container--open .select2-dropdown {
+    margin-top: 0 !important;
+    border-top: none !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Selected value styling */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-size: 2.2rem !important;
+    color: #FFFFFF !important;
+}
+
+/* Placeholder color */
+.select2-container .select2-selection__placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 2.2rem !important;
+}
+
+/* Tagline text styling */
+.tagline {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block !important; /* Changed from inline-block */
+    text-align: center !important;
+    font-size: 1.4rem !important;
+    margin: 0 auto !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Custom cursor styling */
+body, 
+body * {
+    cursor: none !important;
+}
+
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+    will-change: transform;
+}
+
+.custom-cursor::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: #CCFB54;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.custom-cursor.hover {
+    width: 40px;
+    height: 40px;
+    background: rgba(204, 251, 84, 0.1);
+    border-color: #CCFB54;
+}
+
+.custom-cursor.clicking {
+    
+}
+
+/* Hide default cursor */
+a, button, input, select, textarea, .select2-container {
+    cursor: none !important;
+}
+
+/* Force background color for all options */
+.select2-results__options li {
+    background-color: #0b002e !important;
+}
+
+/* Add or update these styles */
+.btn-secondary.prev-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary.prev-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+/* Update the gap between buttons */
+.gap-3 {
+    gap: 1rem !important;
+}
+
+/* Update logo styling */
+.welcome-logo {
+    width: 180px;
+    height: auto;
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+    display: block; /* Ensure proper display */
+    margin-left: auto;
+    margin-right: auto;
+}
