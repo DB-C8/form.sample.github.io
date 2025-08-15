@@ -1,0 +1,290 @@
+import streamlit as st
+import pandas as pd
+from openpyxl import Workbook
+from openpyxl.worksheet.datavalidation import DataValidation
+from io import BytesIO
+from email.message import EmailMessage
+import smtplib
+import os
+import time
+import random
+import openai
+import datetime
+from collections import defaultdict
+import imaplib
+import email
+from email.header import decode_header
+
+# ----------------------
+# Configuration
+# ----------------------
+CATEGORIES = ["Finance", "Marketing", "Sales", "Business Analyst", "AI Technology Manager"]
+
+BASE_MESSAGES = {
+    "Finance": "I admire {Company}'s work in Finance. I’m exploring opportunities in this field and would love any advice on building a strong career. My CV is attached for reference.",
+    "Marketing": "I’ve been impressed by {Company}'s Marketing initiatives. I’m learning more about Marketing and would appreciate any guidance on growing in this field. My CV is attached for reference.",
+    "Sales": "I’m inspired by {Company}'s approach to Sales. I’m exploring this field and would value any advice on developing a career. My CV is attached.",
+    "Business Analyst": "I admire {Company}'s data-driven approach and projects. I’m working to grow my skills as a Business Analyst and would really value your advice. My CV is attached.",
+    "AI Technology Manager": "I’m excited by {Company}'s AI initiatives. I’m exploring career paths in AI/tech management and would greatly appreciate your advice. My CV is attached."
+}
+
+CHATGPT_PROMPTS = {
+    "Finance": """
+You are helping write a polite, concise email seeking career advice.
+Contact: {First_Name} at {Company}.
+Base message: {BaseMessage}
+Personalize it so it sounds natural, mentions the company, and makes it clear the sender is seeking advice or connections. Keep it professional.
+""",
+    "Marketing": """
+Write a short, friendly email to {First_Name} at {Company}.
+Base message: {BaseMessage}
+Make it highly relevant to Marketing, advice-seeking, and polite.
+""",
+    "Sales": """
+Write a short email to {First_Name} at {Company}.
+Base message: {BaseMessage}
+Focus on Sales, seeking advice and possible referrals. Keep it concise and polite.
+""",
+    "Business Analyst": """
+Write a professional email to {First_Name} at {Company}.
+Base message: {BaseMessage}
+Advice-seeking for a career in Business Analysis. Make it concise and polite.
+""",
+    "AI Technology Manager": """
+Write a professional email to {First_Name} at {Company}.
+Base message: {BaseMessage}
+Seeking advice in AI/Tech Management careers. Make it polite, concise, and personalized.
+"""
+}
+
+CV_DAILY_LIMIT = 5
+
+# ----------------------
+# Excel Template Generator
+# ----------------------
+def create_excel_template():
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Contacts"
+
+    headers = ["First Name", "Last Name", "Company", "Email", "Category", 
+               "Sent Date", "Follow-Up 1 Sent", "Follow-Up 2 Sent", "Replied", "Reply Date",
+               "Generated Email", "Test Recipient"]
+    ws.append(headers)
+
+    # Dropdown for Category
+    dv = DataValidation(type="list", formula1=f'"{",".join(CATEGORIES)}"', allow_blank=True)
+    ws.add_data_validation(dv)
+    dv.add(f"E2:E1000")
+
+    # Hidden sheet for templates
+    ws_msg = wb.create_sheet("Templates")
+    ws_msg.append(["Category", "Base Message"])
+    for cat, msg in BASE_MESSAGES.items():
+        ws_msg.append([cat, msg])
+    ws_msg.sheet_state = "hidden"
+
+    stream = BytesIO()
+    wb.save(stream)
+    stream.seek(0)
+    return stream
+
+# ----------------------
+# ChatGPT Personalization
+# ----------------------
+def personalize_email(base_message, first_name, company, category):
+    prompt_template = CHATGPT_PROMPTS.get(category, "")
+    prompt = prompt_template.format(
+        First_Name=first_name,
+        Company=company,
+        BaseMessage=base_message
+    )
+    
+    response = openai.ChatCompletion.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=250
+    )
+    return response['choices'][0]['message']['content']
+
+# ----------------------
+# Email sending function
+# ----------------------
+def send_email(to_email, subject, body, cv_path, from_email, email_password, smtp_server='smtp.gmail.com', smtp_port=587):
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = from_email
+    msg['To'] = to_email
+    msg.set_content(body)
+
+    with open(cv_path, 'rb') as f:
+        msg.add_attachment(f.read(), maintype='application', subtype='octet-stream', filename=os.path.basename(cv_path))
+
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()
+        server.login(from_email, email_password)
+        server.send_message(msg)
+
+# ----------------------
+# IMAP reply tracking
+# ----------------------
+def check_replies(imap_server, email_user, email_pass, df):
+    mail = imaplib.IMAP4_SSL(imap_server)
+    mail.login(email_user, email_pass)
+    mail.select("inbox")
+    status, messages = mail.search(None, "ALL")
+    messages = messages[0].split()
+
+    for msg_id in messages[-100:]:
+        res, msg_data = mail.fetch(msg_id, "(RFC822)")
+        for response_part in msg_data:
+            if isinstance(response_part, tuple):
+                msg = email.message_from_bytes(response_part[1])
+                subject, encoding = decode_header(msg["Subject"])[0]
+                if isinstance(subject, bytes):
+                    subject = subject.decode(encoding if encoding else "utf-8")
+                from_email_addr = email.utils.parseaddr(msg.get("From"))[1]
+
+                match_rows = df[(df['Email'] == from_email_addr)]
+                for idx, row in match_rows.iterrows():
+                    sent_subjects = [
+                        f"Initial - Advice on {row['Category']} Careers",
+                        f"Follow-Up 1 - Advice on {row['Category']} Careers",
+                        f"Follow-Up 2 - Advice on {row['Category']} Careers"
+                    ]
+                    if any(subj in subject for subj in sent_subjects):
+                        df.at[idx, 'Replied'] = True
+                        df.at[idx, 'Reply Date'] = pd.Timestamp.now()
+
+    mail.logout()
+    return df
+
+# ----------------------
+# Streamlit UI
+# ----------------------
+st.title("📧 Job Outreach App with Category-Specific CVs & GPT Personalization")
+
+st.header("Step 1: Download Excel Template")
+if st.button("Download Template"):
+    excel_file = create_excel_template()
+    st.download_button(
+        label="Download Template",
+        data=excel_file,
+        file_name="job_outreach_template.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+st.header("Step 2: Upload Filled Excel Contacts File")
+uploaded_file = st.file_uploader("Upload Excel", type=["xlsx"])
+
+st.sidebar.header("Step 3: Upload CVs Per Category")
+category_cvs = {}
+for cat in CATEGORIES:
+    uploaded_cv = st.sidebar.file_uploader(f"Upload CV for {cat}", type=["pdf", "docx"])
+    if uploaded_cv:
+        temp_path = f"temp_{cat.replace(' ','_')}.pdf"
+        with open(temp_path, "wb") as f:
+            f.write(uploaded_cv.read())
+        category_cvs[cat] = temp_path
+
+st.header("Step 4: Email & IMAP Configuration")
+from_email = st.text_input("Your Email")
+email_password = st.text_input("Email Password (App Password recommended)", type="password")
+imap_server = st.text_input("IMAP Server", value="imap.gmail.com")
+daily_limit = st.number_input("Max emails to send per session", min_value=1, max_value=50, value=10)
+test_mode = st.checkbox("Test Mode: Send all emails to my address(es) only")
+
+if test_mode:
+    test_emails_input = st.text_area(
+        "Enter your personal email(s) for testing (comma-separated)",
+        value=from_email
+    )
+    test_emails = [email.strip() for email in test_emails_input.split(",") if email.strip()]
+else:
+    test_emails = []
+
+if uploaded_file:
+    df = pd.read_excel(uploaded_file, sheet_name="Contacts")
+    st.write("Preview of uploaded contacts:")
+    st.dataframe(df.head())
+
+    if st.button("Check Replies & Send Emails Safely"):
+        # Step 0: Check replies first
+        df = check_replies(imap_server, from_email, email_password, df)
+
+        emails_sent = 0
+        now = pd.Timestamp.now()
+
+        for idx, row in df.iterrows():
+            if emails_sent >= daily_limit:
+                st.warning(f"Daily limit of {daily_limit} reached. Stopping here.")
+                break
+
+            if pd.notna(row.get('Replied')) and row['Replied'] == True:
+                continue
+
+            category = row['Category']
+            cv_path = category_cvs.get(category)
+            if not cv_path:
+                st.warning(f"Skipping {row['First Name']} - No CV uploaded for {category}")
+                continue
+
+            send_email_flag = False
+            followup_type = "Initial"
+
+            if pd.isna(row.get('Sent Date')):
+                send_email_flag = True
+            elif pd.isna(row.get('Follow-Up 1 Sent')) and (now - pd.to_datetime(row['Sent Date'])).days >= 7:
+                send_email_flag = True
+                followup_type = "Follow-Up 1"
+            elif pd.isna(row.get('Follow-Up 2 Sent')) and pd.notna(row.get('Follow-Up 1 Sent')) and \
+                 (now - pd.to_datetime(row['Follow-Up 1 Sent'])).days >= 14:
+                send_email_flag = True
+                followup_type = "Follow-Up 2"
+
+            if not send_email_flag:
+                continue
+
+            base_msg = BASE_MESSAGES.get(category, "").format(Company=row['Company'])
+            personalized_msg = personalize_email(base_msg, row['First Name'], row['Company'], category)
+
+            recipient = row['Email']
+            if test_mode and test_emails:
+                recipient = random.choice(test_emails)
+            if test_mode:
+                df.at[idx, 'Test Recipient'] = recipient
+
+            subject = f"{followup_type} - Advice on {category} Careers"
+
+            send_email(
+                to_email=recipient,
+                subject=subject,
+                body=personalized_msg,
+                cv_path=cv_path,
+                from_email=from_email,
+                email_password=email_password
+            )
+
+            if followup_type == "Initial":
+                df.at[idx, 'Sent Date'] = now
+            elif followup_type == "Follow-Up 1":
+                df.at[idx, 'Follow-Up 1 Sent'] = now
+            elif followup_type == "Follow-Up 2":
+                df.at[idx, 'Follow-Up 2 Sent'] = now
+
+            df.at[idx, 'Generated Email'] = personalized_msg
+
+            emails_sent += 1
+            time.sleep(random.randint(5, 15))  # small random delay
+
+        st.success(f"Email sending complete. Total emails sent: {emails_sent}")
+        st.write("Updated Excel with tracking:")
+        buffer = BytesIO()
+        df.to_excel(buffer, index=False)
+        buffer.seek(0)
+        st.download_button(
+            "Download Updated Excel",
+            data=buffer,
+            file_name="job_outreach_tracking.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
